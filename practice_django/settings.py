@@ -53,6 +53,10 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.github',
+    'django.contrib.humanize',
+    'debug_toolbar',
+    'django_extensions',
+#    'daphne',  vietoj channels
 
 
     'blog.apps.BlogConfig',
@@ -70,6 +74,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'practice_django.urls'
@@ -190,5 +195,38 @@ CKEDITOR_CONFIGS = {
         'width': 'auto',
     },
 }
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+'''
+ASGI_APPLICATION = "practice_django.routing.application"
+
+CHANNEL_LAYERS = {
+    'default':{
+        'BACKEND':'channels.layers.InMemoryChannelLayer'
+    }
+}
+'''
+
+EMAIL_BACKEND = 'django.core.email.backend.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = os.getenv('EMAIL_PORT')
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.getenv('EMAIL_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_PASS')
+
+GOOGLE_RECAPTCHA_SECRET_KEY = os.getenv('GOOGLE_RECAPTCHA_SECRET_KEY')
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'alert-secondary',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
+
+}
+
+os.environ['DJANGO_ALLOW_ASYNC_UNSAFE'] = 'true'
 
 
